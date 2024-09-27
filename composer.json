@@ -1,16 +1,20 @@
 {
-    "name": "codigoconjuan/app-salon_php_mvc_js_sass",
-    "description": "Proyecto PHP 8, MVC, SQL, SASS, Active Record",
+    "name": "tomor/app-salon_php_mvc_js_sass",
+    "description": "Proyecto AppPeluqueria",
     "type": "project",
     "autoload": {
         "psr-4": {
             "MVC\\" : "./",
             "Controllers\\" : "./controllers",
             "Model\\" : "./models",
-            "Classes\\" : "./classes"
+            "Tomor\\AppSalonPhpMvcJsSass\\": "src/"
         }
     },
-    "require": {
-        "phpmailer/phpmailer": "^6.5"
-    }
+    "authors": [
+        {
+            "name": "Tomas",
+            "email": "tomas.mora1@ulatina.net"
+        }
+    ],
+    "require": {}
 }
