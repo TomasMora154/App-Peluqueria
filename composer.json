@@ -6,9 +6,8 @@
         "psr-4": {
             "MVC\\" : "./",
             "Controllers\\" : "./controllers",
-            "Model\\" : "./models",
-            "Tomor\\AppSalonPhpMvcJsSass\\": "src/"
-        }
+            "Model\\" : "./models"
+        } 
     },
     "authors": [
         {
