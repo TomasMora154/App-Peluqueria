@@ -1,6 +1,6 @@
 <?php
 
-$db = mysqli_connect('localhost', 'root', 'Qltgfq86', '');
+$db = mysqli_connect('localhost', 'root', 'Qltgfq86', 'apppeluqueria');
 
 
 if (!$db) {
