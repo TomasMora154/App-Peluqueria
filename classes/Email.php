@@ -49,4 +49,37 @@ class Email {
         $mail->send();
     }
 
+    public function enviarIntrucciones() { 
+
+        // Crear el objeto de email
+        $mail = new PHPMailer();
+        $mail->isSMTP();
+        $mail->Host = 'sandbox.smtp.mailtrap.io';
+        $mail->SMTPAuth = true;
+        $mail->Port = 2525;
+        $mail->Username = '2d0909d66106f4';
+        $mail->Password = '1de5e5dfa9ac5a';
+
+        // Tienen que cambiar al comprar dominio
+        $mail->setFrom('cuentas@apppeluqueria.com');
+        $mail->addAddress($this->email, $this->nombre);
+        $mail->Subject = 'Reestablece tu contraseña';
+
+        // Set HTML
+        $mail->isHTML(true);
+        $mail->CharSet = 'UTF-8';
+
+        $contenido = "<html>";
+        $contenido .= "<p><strong>Hola " . $this->nombre . "</strong> Has solicitado reestablecer 
+        tu contraseña, sigue el siguiente enlace para hacerlo</p>";
+        $contenido .= "<p>Presiona aquí: <a href='http://localhost:3000/recuperar?token="
+        . $this->token . "'>Reestablecer Contraseña</a> </p>";
+        $contenido .= "<p>Si tu no solicitaste esta cambio, puedes ignorar el mensaje</p>";
+        $contenido .= "</html>";
+        $mail->Body = $contenido;
+
+        // Enviar el mail
+        $mail->send();
+    }
+
 }
