@@ -1,13 +1,15 @@
 .seccion {
     padding: 5rem 0;
+    display: none;
 
     .text-center {
         text-align: center;
     }
+}
 
-    // Para ocultar tus datos, cita y resumen del index.php de cita
-    &:nth-child(3),
-    &:nth-child(4) {
-        display: none;
-    }
+.mostrar {
+    display: block;
+}
+.ocultar {
+    display: none;
 }
