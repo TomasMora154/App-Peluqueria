@@ -1,0 +1,12 @@
+.seccion {
+
+    .text-center {
+        text-align: center;
+    }
+
+    // Para ocultar tus datos, cita y resumen del index.php de cita
+    &:nth-child(2),
+    &:nth-child(3) {
+        display: none;
+    }
+}
