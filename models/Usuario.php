@@ -3,11 +3,13 @@
 namespace Model;
 
 class Usuario extends ActiveRecord {
-    // Base de datos
+    // Nombre de la tabla en la base de datos
     protected static $tabla = 'usuarios';
+    // Columnas de la tabla
     protected static $columnasDB = ['id', 'nombre' , 'apellido', 'email', 'password',
     'telefono', 'admin', 'confirmado', 'token'];
 
+    // Propiedades del usuario
     public $id;
     public $nombre;
     public $apellido;
@@ -18,7 +20,7 @@ class Usuario extends ActiveRecord {
     public $confirmado;
     public $token;
 
-    // Constructor
+     // Constructor de la clase
     public function __construct($args = []) {
         $this->id = $args['id'] ?? null;
         $this->nombre = $args['nombre'] ?? '';
@@ -54,6 +56,7 @@ class Usuario extends ActiveRecord {
         return self::$alertas;
     }
 
+    // Valida los campos para el inicio de sesión
     public function validarLogin() {
         if(!$this->email) {
             self::$alertas['error'][] = 'El email es Obligatorio';
@@ -73,7 +76,7 @@ class Usuario extends ActiveRecord {
         return self::$alertas;
     }
 
-    // Función para validar la Contrasela
+    // Función para validar la Contraseña
     public function validarPassword() {
         if(!$this->password) {
             self::$alertas['error'][] = 'La Contraseña es obligatoria';
@@ -96,14 +99,17 @@ class Usuario extends ActiveRecord {
         return $resultado;
     }
 
+    // Funcion para hashear el password
     public function hashPassword() {
         $this->password = password_hash( $this->password, PASSWORD_BCRYPT);
     }
 
+    // Funcion para crear un token único
     public function crearToken() {
         $this->token = uniqid();
     }
 
+    // Valida la contraseña y si el usuario está confirmado
     public function comprobarPasswordAndVerificado($password) {
         $resultado = password_verify($password, $this->password);
         

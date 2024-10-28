@@ -5,17 +5,19 @@ namespace Classes;
 use PHPMailer\PHPMailer\PHPMailer;
 
 class Email {
-
+    // Propiedades de la clase para almacenar la información del destinatario y el token de verificación
     public $email;
     public $nombre;
     public $token;
 
+     // Constructor de la clase que recibe y asigna los valores de nombre, email y token
     public function __construct($nombre, $email, $token) {
         $this->nombre = $nombre;
         $this->email = $email;
         $this->token = $token;
     }
 
+    // Método para enviar el correo de confirmación de cuenta
     public function enviarConfirmacion() {
 
         // Crear el objeto de email
@@ -27,7 +29,7 @@ class Email {
         $mail->Username = '2d0909d66106f4';
         $mail->Password = '1de5e5dfa9ac5a';
 
-        // Tienen que cambiar al comprar dominio
+        // Remitente del correo
         $mail->setFrom('cuentas@apppeluqueria.com');
         $mail->addAddress($this->email, $this->nombre);
         $mail->Subject = 'Confirma tu cuenta';
@@ -36,6 +38,7 @@ class Email {
         $mail->isHTML(true);
         $mail->CharSet = 'UTF-8';
 
+        // Contenido del correo en formato HTML
         $contenido = "<html>";
         $contenido .= "<p><strong>Hola " . $this->nombre . "</strong> Has creado tu cuenta en 
         Peluquería Quirós, debes confirmarla presionando el siguiente enlace</p>";
@@ -60,7 +63,7 @@ class Email {
         $mail->Username = '2d0909d66106f4';
         $mail->Password = '1de5e5dfa9ac5a';
 
-        // Tienen que cambiar al comprar dominio
+        // Remitente del correo
         $mail->setFrom('cuentas@apppeluqueria.com');
         $mail->addAddress($this->email, $this->nombre);
         $mail->Subject = 'Reestablece tu contraseña';

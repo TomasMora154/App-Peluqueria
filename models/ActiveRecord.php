@@ -15,15 +15,17 @@ class ActiveRecord {
         self::$db = $database;
     }
 
+    // Agregar una alerta
     public static function setAlerta($tipo, $mensaje) {
         static::$alertas[$tipo][] = $mensaje;
     }
 
-    // Validación
+    // Obtener todas las alertas
     public static function getAlertas() {
         return static::$alertas;
     }
 
+    // Método de validación
     public function validar() {
         static::$alertas = [];
         return static::$alertas;
@@ -37,7 +39,7 @@ class ActiveRecord {
         // Iterar los resultados
         $array = [];
         while($registro = $resultado->fetch_assoc()) {
-            $array[] = static::crearObjeto($registro);
+            $array[] = static::crearObjeto($registro); // Crea objeto para cada registro
         }
 
         // liberar la memoria
@@ -49,8 +51,9 @@ class ActiveRecord {
 
     // Crea el objeto en memoria que es igual al de la BD
     protected static function crearObjeto($registro) {
-        $objeto = new static;
+        $objeto = new static; // Crea una nueva instancia de la clase
 
+         // Asigna cada propiedad del registro al objeto
         foreach($registro as $key => $value ) {
             if(property_exists( $objeto, $key  )) {
                 $objeto->$key = $value;
@@ -72,10 +75,10 @@ class ActiveRecord {
 
     // Sanitizar los datos antes de guardarlos en la BD
     public function sanitizarAtributos() {
-        $atributos = $this->atributos();
+        $atributos = $this->atributos(); // Obtiene los atributos
         $sanitizado = [];
         foreach($atributos as $key => $value ) {
-            $sanitizado[$key] = self::$db->escape_string($value);
+            $sanitizado[$key] = self::$db->escape_string($value); // Escapa caracteres especiales
         }
         return $sanitizado;
     }
@@ -84,7 +87,7 @@ class ActiveRecord {
     public function sincronizar($args=[]) { 
         foreach($args as $key => $value) {
           if(property_exists($this, $key) && !is_null($value)) {
-            $this->$key = $value;
+            $this->$key = $value; // Asigna el valor al atributo si existe
           }
         }
     }
@@ -93,7 +96,7 @@ class ActiveRecord {
     public function guardar() {
         $resultado = '';
         if(!is_null($this->id)) {
-            // actualizar
+            // Si el ID no es nulo, se actualiza
             $resultado = $this->actualizar();
         } else {
             // Creando un nuevo registro
@@ -123,6 +126,7 @@ class ActiveRecord {
         return array_shift( $resultado ) ;
     }
 
+    // Buscar registros donde una columna tiene un cierto valor
     public static function where($columna, $valor) {
         $query = "SELECT * FROM " . static::$tabla ." WHERE ${columna} = '${valor}'";
         $resultado = self::consultarSQL($query);

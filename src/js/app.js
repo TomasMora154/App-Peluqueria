@@ -1,11 +1,14 @@
+// Inicializa el paso actual y define los límites de pasos
 let paso = 1;
 const pasoInicial = 1;
 const pasoFinal = 3;
 
+// Espera a que el DOM esté completamente cargado para iniciar la aplicación
 document.addEventListener('DOMContentLoaded', function() {
-    iniciarApp();
+    iniciarApp(); // Inicia la aplicación
 })
 
+// Función principal para iniciar la aplicación
 function iniciarApp() {
     mostrarSeccion(); // Muestra y oculta las secciones
     tabs(); // Cambia la sección cuando se presionen los tabs
@@ -14,6 +17,7 @@ function iniciarApp() {
     paginaAnterior();
 }
 
+// Función para mostrar la sección correspondiente al paso actual
 function mostrarSeccion() {
 
     // Ocultar la sección que tenga la clase de mostrar
@@ -42,18 +46,20 @@ function tabs() {
     // Agrega y cambia la variable según el tab seleccionado
     const botones = document.querySelectorAll('.tabs button');
     botones.forEach( boton => {
+        // Agrega un evento click a cada botón de tab
         boton.addEventListener('click', function(e) {
-            paso = parseInt(e.target.dataset.paso);
+            paso = parseInt(e.target.dataset.paso); // Actualiza el paso basado en el botón clicado
             mostrarSeccion();
             botonesPaginador();
         });
     })
 }
 
+// Función para mostrar/ocultar los botones de paginación
 function botonesPaginador() {
     const paginaAnterior = document.querySelector('#anterior');
     const paginaSiguiente = document.querySelector('#siguiente');
-
+    // Controla la visibilidad de los botones de paginación
     if (paso === 1) {
         paginaAnterior.classList.add('ocultar');
         paginaSiguiente.classList.remove('ocultar');
@@ -64,9 +70,10 @@ function botonesPaginador() {
         paginaAnterior.classList.remove('ocultar');
         paginaSiguiente.classList.remove('ocultar');
     }
-    mostrarSeccion();
+    mostrarSeccion(); // Asegura que la sección correcta esté visible
 }
 
+// Configura el evento para el botón de página anterior
 function paginaAnterior() {
     const paginaAnterior = document.querySelector('#anterior');
     paginaAnterior.addEventListener('click', function() {
@@ -77,6 +84,7 @@ function paginaAnterior() {
     })
 }
 
+// Configura el evento para el botón de página siguiente
 function paginaSiguiente() {
     const paginaSiguiente = document.querySelector('#siguiente');
     paginaSiguiente.addEventListener('click', function() {
