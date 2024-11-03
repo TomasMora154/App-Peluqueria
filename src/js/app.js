@@ -24,6 +24,10 @@ function iniciarApp() {
     paginaAnterior();
 
     consultarAPI(); // Consulta la API en el backend de PHP
+
+    nombreCliente(); // Añade el nombre del cliente al objeto de cita
+    seleccionarFecha(); // Añade la fecha de la cita en el objeto 
+    seleccionarHora(); // Añade la hora de la cita en el objeto 
 }
 
 // Función para mostrar la sección correspondiente al paso actual
@@ -163,4 +167,85 @@ function seleccionarServicio(servicio) {
         divServicio.classList.add('seleccionado')
     }
     console.log(cita);
+}
+
+function nombreCliente() {
+    cita.nombre = document.querySelector('#nombre').value;
+}
+
+function seleccionarFecha() {
+    const inputFecha = document.querySelector('#fecha');
+    inputFecha.addEventListener('input', function(e) { 
+
+        const dia = new Date(e.target.value).getUTCDay();
+
+        // Verifica si seleccionó día domingo
+        if( [0].includes(dia) ) {
+            e.target.value = '';
+            mostrarAlerta('Domingos cerrado', 'error');
+        } else {
+            cita.fecha = e.target.value;
+        }       
+    })
+}
+
+function seleccionarHora() {
+    const inputHora = document.querySelector('#hora');
+    inputHora.addEventListener('input', function(e) {
+        const horaCita = e.target.value;
+        const [hora, minuto] = horaCita.split(":").map(Number); // Convierte hora y minuto a números
+
+        // Horario de hora válida: 8:30 a.m a 11:45 a.m && 14:00 pm a 18:00 p.m
+        const esHoraMananaValida = (hora === 8 && minuto >= 30) || (hora > 8 && hora < 11) || (hora === 11 && minuto <= 45);
+        const esHoraTardeValida = (hora === 14 && minuto >= 0) || (hora > 14 && hora < 18) || (hora === 18 && minuto === 0);
+        
+        // Si es una hora válida
+        if (esHoraMananaValida || esHoraTardeValida) {
+            cita.hora = e.target.value;
+            console.log(cita)
+        } else {
+            e.target.value = '';
+            mostrarAlerta('Hora No Válida. Horarios disponibles: \n' +
+                  '• Mañana: 08:30 a.m. - 11:45 a.m.\n' +
+                  '• Tarde: 02:00 p.m. - 06:00 p.m.', 'error');
+        }
+    });
+}
+
+/*
+function seleccionarHora() {
+    const inputHora = document.querySelector('#hora');
+    inputHora.addEventListener('input', function(e) {
+        const horaCita = e.target.value;
+        const hora = horaCita.split(":")[0];
+        const minuto = horaCita.split(":")[1];
+        // Horario de hora válida: 8:30 a.m a 11:45 a.m && 14:00 pm a 18:p.m
+        if (hora < 8 && minuto < 30 || hora >= 11 && minuto >= 45 || hora < 14 || hora >= 18) {
+            console.log('Hora no valida')
+        } else {
+            console.log('Hora Válida')
+        }
+    })
+} */
+
+// Muestra alerta cuando la cita es día domingo
+function mostrarAlerta(mensaje, tipo) {
+
+    // Prevenir la creación de más de una alerta
+    const alertaPrevia = document.querySelector('.alerta');
+    if(alertaPrevia) return;
+
+    // Crear la alerta
+    const alerta = document.createElement('DIV');
+    alerta.textContent = mensaje;
+    alerta.classList.add('alerta');
+    alerta.classList.add(tipo);
+    
+    const formulario = document.querySelector('.formulario');
+    formulario.appendChild(alerta);
+
+    // Desaparece la alerta a los 6 segundos
+    setTimeout(() => {
+        alerta.remove();
+    }, 6000);
 }
