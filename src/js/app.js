@@ -15,6 +15,8 @@ function iniciarApp() {
     botonesPaginador(); // Agrega o quita los botones del paginador
     paginaSiguiente();
     paginaAnterior();
+
+    consultarAPI(); // Consulta la API en el backend de PHP
 }
 
 // Función para mostrar la sección correspondiente al paso actual
@@ -91,5 +93,40 @@ function paginaSiguiente() {
         if(paso >= pasoFinal) return;
         paso++;
         botonesPaginador();
+    })
+}
+
+async function consultarAPI() {
+    try {
+        const url = 'http://localhost:3000/api/servicios';
+        const resultado = await fetch(url);
+        const servicios = await resultado.json();
+        mostrarServicios(servicios);
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+function mostrarServicios(servicios) {
+    servicios.forEach( servicio => {
+        const { id, nombre, precio } = servicio;
+
+        const nombreServicio = document.createElement('P');
+        nombreServicio.classList.add('nombre-servicio');
+        nombreServicio.textContent = nombre;
+
+        const precioServicio = document.createElement('P');
+        precioServicio.classList.add('precio-servicio');
+        precioServicio.textContent = `$${precio}`;
+
+        const servicioDiv = document.createElement('DIV');
+        servicioDiv.classList.add('servicio');
+        servicioDiv.dataset.idServicio = id;
+
+        servicioDiv.appendChild(nombreServicio);
+        servicioDiv.appendChild(precioServicio);
+
+        document.querySelector('#servicios').appendChild(servicioDiv);
     })
 }

@@ -1,0 +1,14 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.listado-servicios {
+
+    @include m.tablet {
+        @include m.grid(2, 2rem)
+    }
+
+    .servicio {
+
+    }
+
+}
