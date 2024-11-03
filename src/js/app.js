@@ -3,6 +3,13 @@ let paso = 1;
 const pasoInicial = 1;
 const pasoFinal = 3;
 
+const cita = {
+    nombre: '',
+    fecha: '',
+    hora: '',
+    servicios: []
+}
+
 // Espera a que el DOM esté completamente cargado para iniciar la aplicación
 document.addEventListener('DOMContentLoaded', function() {
     iniciarApp(); // Inicia la aplicación
@@ -123,10 +130,37 @@ function mostrarServicios(servicios) {
         const servicioDiv = document.createElement('DIV');
         servicioDiv.classList.add('servicio');
         servicioDiv.dataset.idServicio = id;
+        servicioDiv.onclick = function(){
+            seleccionarServicio(servicio);
+        }
 
         servicioDiv.appendChild(nombreServicio);
         servicioDiv.appendChild(precioServicio);
 
         document.querySelector('#servicios').appendChild(servicioDiv);
     })
+}
+
+function seleccionarServicio(servicio) {
+    //Extraer el id del servicio
+    const { id } = servicio;
+    // Extraer el arreglo de servicios
+    const { servicios } = cita;
+    // Identificar el elemento al que se le da clic
+    const divServicio = document.querySelector(`[data-id-servicio="${id}"]`);
+
+    // Comprobar si un servicio ya fue agregado
+    if( servicios.some( agregado => agregado.id === id ) ) {
+        //  Si ya está agregado, eliminarlo
+        cita.servicios = servicios.filter( agregado => agregado.id !== id )
+        // Se le elimina el id de seleccionado
+        divServicio.classList.remove('seleccionado')
+    } else {
+        // Si no existe, agregarlo
+        // Tomo una copia de los servicios y agrego uno nuevo
+        cita.servicios = [...servicios, servicio];
+        // Se le agrega el id de seleccionado
+        divServicio.classList.add('seleccionado')
+    }
+    console.log(cita);
 }
