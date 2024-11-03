@@ -305,13 +305,38 @@ function mostrarResumen() {
     const nombreCliente = document.createElement('P');
     nombreCliente.innerHTML = `<span>Nombre:</span> ${nombre}`;
 
-    const fechaCita = document.createElement('P');
-    fechaCita.innerHTML = `<span>Fecha:</span> ${fecha}`;
+    // Formatear la fecha
+    const fechaObj = new Date(fecha);
+    const mes = fechaObj.getMonth();
+    const dia = fechaObj.getDate() + 2;
+    const year = fechaObj.getFullYear();
 
+    const fechaUTC = new Date( Date.UTC(year, mes, dia));
+
+    const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}
+    const fechaFormateada = fechaUTC.toLocaleDateString('es-MX', opciones);
+
+    // Agregar la fecha
+    const fechaCita = document.createElement('P');
+    fechaCita.innerHTML = `<span>Fecha:</span> ${fechaFormateada}`;
+
+    // Agregar la hora
     const horaCita = document.createElement('P');
     horaCita.innerHTML = `<span>Hora:</span> ${hora}`;
+
+    // Botón para crear una cita
+    const botonReservar = document.createElement('BUTTON');
+    botonReservar.classList.add('boton');
+    botonReservar.textContent = 'Reservar Cita';
+    botonReservar.onclick = reservarCita;
 
     resumen.appendChild(nombreCliente);
     resumen.appendChild(fechaCita);
     resumen.appendChild(horaCita);
+
+    resumen.appendChild(botonReservar);
+}
+
+function reservarCita() {
+    console.log('Reservando Cita...')
 }
