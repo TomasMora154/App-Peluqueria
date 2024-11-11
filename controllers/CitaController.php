@@ -12,7 +12,8 @@ class CitaController {
 
         // Renderizar la vista 'cita/index' y pasarle el nombre del usuario desde la sesión
         $router->render('cita/index', [
-            'nombre' => $_SESSION['nombre']
+            'nombre' => $_SESSION['nombre'],
+            'id' => $_SESSION['id']
         ]);
     }
 }

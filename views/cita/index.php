@@ -45,6 +45,8 @@
                     type="time"
                 />
             </div>
+            <input type="hidden" id="id" value="<?php echo $id; ?>">
+
         </form>
     </div>
     <div id="paso-3" class="seccion contenido-resumen">
