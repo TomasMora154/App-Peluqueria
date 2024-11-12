@@ -10,6 +10,8 @@ class CitaController {
         // Iniciar la sesión para acceder a los datos de sesión
         session_start();
 
+        isAuth();
+
         // Renderizar la vista 'cita/index' y pasarle el nombre del usuario desde la sesión
         $router->render('cita/index', [
             'nombre' => $_SESSION['nombre'],

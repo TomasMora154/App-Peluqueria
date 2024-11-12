@@ -55,7 +55,11 @@ class LoginController {
     }
     // Método para manejar el cierre de sesión
     public static function logout() {
-        echo "Desde Logout";
+        session_start();
+
+        $_SESSION = [];
+
+        header('Location: /');
     }
 
     // Método para manejar la solicitud de restablecer la contraseña
