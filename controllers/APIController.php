@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Model\Cita;
+use Model\CitaServicio;
 use Model\Servicio;
 
 class APIController {
@@ -14,8 +15,25 @@ class APIController {
 
     public static function guardar() {
 
+        // Almacena la cita y devuelve el ID
         $cita = new Cita($_POST);
         $resultado = $cita->guardar();
-        echo json_encode($resultado);
+
+        $id = $resultado['id'];
+
+        // Almacena la Cita y el Servicio
+        // Convertirlo a un arreglo
+        $idServicios = explode(",", $_POST['servicios']);
+        // Almacena los Servicios con el ID de la Cita
+        foreach($idServicios as $idServicio) {
+            $args = [
+                'citaId' => $id,
+                'servicioId' => $idServicio
+            ];
+            $citaServicio = new CitaServicio($args);
+            $citaServicio->guardar();
+        }
+        // Retornamos una respuesta
+        echo json_encode(['resultado' => $resultado]);
     }
 }
