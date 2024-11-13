@@ -9,6 +9,8 @@ class ServicioController {
     public static function index(Router $router) {
         session_start();
 
+        isAdmin();
+
         // Mostrar los servicios
         $servicios = Servicio::all();
 
@@ -21,6 +23,7 @@ class ServicioController {
     // Función para crear un nuevo Servicio
     public static function crear(Router $router) {
         session_start();
+        isAdmin();
         $servicio = new Servicio;
         $alertas = [];
 
@@ -44,6 +47,7 @@ class ServicioController {
     // Método para actualizar los servicios
     public static function actualizar(Router $router) {
         session_start();
+        isAdmin();
 
         $id = $_GET['id'] ?? null; // Obtiene el ID de la URL
         if (!is_numeric($id)) return; // Verifica que el ID sea numérico
@@ -67,9 +71,16 @@ class ServicioController {
         ]);
     }
 
+    // Método para borrar los servicios
     public static function eliminar(Router $router) {
+        session_start();
+        isAdmin();
+        
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
-            
+            $id = $_POST['id'];
+            $servicio = Servicio::find($id);
+            $servicio->eliminar();
+            header('Location: /servicios');
         }
     }
 }
