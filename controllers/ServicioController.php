@@ -41,13 +41,29 @@ class ServicioController {
         ]);
     }
 
+    // Método para actualizar los servicios
     public static function actualizar(Router $router) {
+        session_start();
+
+        $id = $_GET['id'] ?? null; // Obtiene el ID de la URL
+        if (!is_numeric($id)) return; // Verifica que el ID sea numérico
+        $servicio = Servicio::find($id);
+        $alertas = [];
+
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
-            
+            $servicio->sincronizar($_POST);
+            $alertas = $servicio->validar();
+
+            if(empty($alertas)) {
+                $servicio->guardar();
+                header('Location: /servicios');
+            }
         }
 
         $router->render('servicios/actualizar', [
-            'nombre' => $_SESSION['nombre']
+            'nombre' => $_SESSION['nombre'],
+            'servicio' => $servicio,
+            'alertas' => $alertas
         ]);
     }
 
