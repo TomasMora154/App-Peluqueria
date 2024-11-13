@@ -1,10 +1,9 @@
 <h1 class="nombre-pagina">Crear Nueva Cita</h1>
 <p class="descripcion-pagina">Elige tus servicios y coloca tus datos</p>
 
-<div class="barra">
-    <p>Bienvenido: <?php echo $nombre ?? ''; ?></p>
-    <a class="boton" href="/logout">Cerrar Sesión</a>
-</div>
+<?php
+    include_once __DIR__ . '/../templates/barra.php';
+?>
 
 <div id="app">
     <nav class="tabs">
@@ -39,7 +38,7 @@
                 <input 
                     id="fecha"
                     type="date"
-                    min="<?php echo date('Y-m-d', strtotime('+1 day')); ?>"
+                    min="<?php echo date('Y-m-d'); ?>"
                 />
             </div>
 
