@@ -13,6 +13,7 @@
             type="date"
             id="fecha"
             name="fecha"
+            value="<?php echo $fecha; ?>"
             />
         </div>
     </form>

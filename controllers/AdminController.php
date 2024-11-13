@@ -9,6 +9,11 @@ class AdminController {
     public static function index( Router $router ) {
         session_start();
 
+        // Configurar la zona horaria correcta
+        date_default_timezone_set('America/Costa_Rica');
+
+        $fecha = date('Y-m-d');
+
         // Consultar la base de datos
         $consulta = "SELECT citas.id, citas.hora, CONCAT( usuarios.nombre, ' ', usuarios.apellido) as cliente, ";
         $consulta .= " usuarios.email, usuarios.telefono, servicios.nombre as servicio, servicios.precio  ";
@@ -19,13 +24,14 @@ class AdminController {
         $consulta .= " ON citasServicios.citaId=citas.id ";
         $consulta .= " LEFT OUTER JOIN servicios ";
         $consulta .= " ON servicios.id=citasServicios.servicioId ";
-        //$consulta .= " WHERE fecha =  '${fecha}' ";
+        $consulta .= " WHERE fecha =  '${fecha}' ";
 
         $citas = AdminCita::SQL($consulta);
 
         $router->render('admin/index', [
             'nombre' => $_SESSION['nombre'],
-            'citas' => $citas
+            'citas' => $citas,
+            'fecha' => $fecha
         ]);
     }
 }
