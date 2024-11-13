@@ -9,6 +9,8 @@ class AdminController {
     public static function index( Router $router ) {
         session_start();
 
+        isAdmin();
+
         // Configurar la zona horaria correcta
         date_default_timezone_set('America/Costa_Rica');
 
