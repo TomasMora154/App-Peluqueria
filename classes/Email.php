@@ -30,7 +30,7 @@ class Email {
         $mail->Password = $_ENV['EMAIL_PASS'];
 
         // Remitente del correo
-        $mail->setFrom('cuentas@apppeluqueria.com');
+        $mail->setFrom('pquiros@beltoil.com');
         $mail->addAddress($this->email, $this->nombre);
         $mail->Subject = 'Confirma tu cuenta';
 
@@ -64,7 +64,7 @@ class Email {
         $mail->Password = $_ENV['EMAIL_PASS'];
 
         // Remitente del correo
-        $mail->setFrom('cuentas@apppeluqueria.com');
+        $mail->setFrom('pquiros@beltoil.com');
         $mail->addAddress($this->email, $this->nombre);
         $mail->Subject = 'Reestablece tu contraseña';
 
