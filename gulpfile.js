@@ -71,4 +71,4 @@ export function dev() {
 
 export default series(js, css, imagenes, dev);
 
-export const build = parallel(css, js, imagenes);
+export const build = parallel(css, js, imagenes, dev);
